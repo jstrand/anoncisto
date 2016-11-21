@@ -3,12 +3,15 @@ import Html.Attributes exposing (style, value)
 import Html.Events exposing (onClick, onInput)
 import Markdown
 import Html.App as App
-import Steps as Steps exposing (Steps)
 import Keyboard
 import Http
 import Task
 import Json.Decode exposing (list, string)
 import WebSocket
+
+import Steps.Json as Steps
+import Steps.Main as Steps
+import Steps.Types exposing (Steps)
 
 titleSlide = """
 
@@ -80,7 +83,7 @@ defaultSlide = """
 
 decodePost = string
 
-update msg model = 
+update msg model =
   case msg of
     Change newContent ->
       ({ model | editBuffer = newContent }, Cmd.none)
@@ -93,8 +96,8 @@ update msg model =
           mode = Presenting
           , slides = newSlides
         }
-        , Task.perform SaveFail SaveOk 
-          <| Http.post slidesDecoder backendUrl 
+        , Task.perform SaveFail SaveOk
+          <| Http.post slidesDecoder backendUrl
           <| Http.string
           <| Steps.toJsonWithString newSlides
       )
@@ -112,7 +115,7 @@ update msg model =
     Noop ->
       (model, Cmd.none)
 
-slideStyles = style 
+slideStyles = style
   [ ("width", "40em")
   , ("margin", "auto")
   , ("margin-top", "4em")
@@ -122,7 +125,7 @@ slideStyles = style
 
 showCurrentSlide model = Markdown.toHtml [slideStyles] <| model.slides.current
 
-editStyles = 
+editStyles =
   [ ("width", "100%")
   , ("height", "20em")
   ] ++ previewStyles
@@ -165,7 +168,7 @@ keyToMsg code =
 
 broadCastEndpoint = "ws://localhost:9000"
 
-subs model = 
+subs model =
   case model.mode of
     Presenting -> Sub.batch [Keyboard.presses keyToMsg, WebSocket.listen broadCastEndpoint NewMessage]
     Editing -> Sub.none
@@ -179,4 +182,3 @@ main =
     , update = update
     , subscriptions = subs
     }
-
