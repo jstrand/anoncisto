@@ -4,7 +4,6 @@ import Http
 import Task
 
 import Presentation.Types exposing (Model, Mode(..), Msg(..))
-import Presentation.Update exposing (backendUrl, slidesDecoder)
 import Steps.Main as Steps
 
 titleSlide : String
@@ -39,9 +38,8 @@ typesInElm = """
 initialModel : (Model, Cmd Msg)
 initialModel =
   (defaultModel
-  , Task.perform LoadFail LoadOk (Http.get slidesDecoder backendUrl)
-  )
+  , Cmd.none)
 
 defaultModel : Model
 defaultModel =
-  Model (Steps.new titleSlide [introElm, typesInElm]) Loading ""
+  Model (Steps.new titleSlide [introElm, typesInElm]) Presenting ""

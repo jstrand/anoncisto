@@ -5,7 +5,7 @@ import Http
 import Steps.Types exposing (Steps)
 
 type alias Slide = String
-type Mode = Loading | Presenting | Editing | Failed
+type Mode = Presenting
 
 type alias Model =
   { slides: Steps Slide
@@ -17,12 +17,4 @@ type Msg =
     Noop
   | Next
   | Previous
-  | Edit
-  | Change String
-  | Save
-  | Cancel
-  | SaveOk (List String)
-  | SaveFail Http.Error
-  | LoadOk (List String)
-  | LoadFail Http.Error
   | NewMessage String
