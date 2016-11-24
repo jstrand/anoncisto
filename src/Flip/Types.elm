@@ -1,7 +1,14 @@
 module Flip.Types exposing (..)
 
-type alias FlipModel = ()
+import Window exposing (Size)
+
+type alias FlipModel =
+  {
+    viewHeight: Int
+  }
 
 type FlipMsg =
-    Send
+    Next
+  | Previous
   | NewMessage String
+  | NewSize Size

@@ -9,13 +9,11 @@ import Presentation.Types exposing (Model, Mode(..), Msg(..))
 import Steps.Json as Steps
 import Steps.Main as Steps
 
-defaultSlide : String
-defaultSlide = """
-# Ditt innehåll här...
-* Ett
-* Två
-* Tre
-"""
+strToMsg str =
+  case str of
+    "Next" -> Next
+    "Previous" -> Previous
+    _ -> Next
 
 updatePresentation : Msg -> Model -> (Model, Cmd Msg)
 updatePresentation msg model =
@@ -24,6 +22,6 @@ updatePresentation msg model =
       ({ model | slides = Steps.next model.slides }, Cmd.none)
     Previous ->
       ({ model | slides = Steps.previous model.slides }, Cmd.none)
-    NewMessage str -> updatePresentation Next model
+    NewMessage str -> updatePresentation (strToMsg str) model
     Noop ->
       (model, Cmd.none)

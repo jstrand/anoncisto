@@ -1,11 +1,15 @@
 module Flip.Subscriptions exposing (flipSubs)
 
 import WebSocket
+import Window
 
 import Flip.Types exposing (..)
 import Flip.Config exposing (..)
 
 flipSubs : FlipModel -> Sub FlipMsg
 flipSubs model =
-  WebSocket.listen flipServer NewMessage
+  Sub.batch
+    [ WebSocket.listen flipServer NewMessage
+    , Window.resizes NewSize
+    ]
 

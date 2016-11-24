@@ -1,6 +1,8 @@
 module Flip.Main exposing (main)
 
 import Html.App as App
+import Window
+import Task
 
 import Flip.Subscriptions exposing (flipSubs)
 import Flip.Update exposing (updateFlip)
@@ -9,7 +11,7 @@ import Flip.Types exposing (..)
 
 initFlip : (FlipModel, Cmd FlipMsg)
 initFlip =
-  ((), Cmd.none)
+  (FlipModel 0, Task.perform NewSize NewSize Window.size)
 
 main : Program Never
 main =
