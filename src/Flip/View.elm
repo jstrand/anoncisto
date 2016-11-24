@@ -9,6 +9,11 @@ import Flip.Types exposing (..)
 nextStyle height = style
   [ ("width", "75%")
   , ("height", scale height)
+  , ("border", "none")
+  , ("background-color", "#116416")
+  , ("color", "white")
+  , ("font-weight", "bold")
+  , ("font-size", "70pt")
   ]
 
 scale height =
@@ -19,6 +24,11 @@ previousStyle height = style
   [ ("width", "22%")
   , ("margin-right", "3%")
   , ("height", scale height)
+  , ("border", "none")
+  , ("background-color", "#550000")
+  , ("color", "white")
+  , ("font-weight", "bold")
+  , ("font-size", "70pt")
   ]
 
 containerStyle height = style
