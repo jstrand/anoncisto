@@ -27,9 +27,14 @@ class BroadcastSocket(tornado.websocket.WebSocketHandler):
 
 
 if __name__ == "__main__":
+
+    port = 9000
+
     app = tornado.web.Application(
         [(r"/", BroadcastSocket)
         ])
-    app.listen(9000)
+    app.listen(port)
+
+    print "Listening on ", port
     tornado.ioloop.IOLoop.current().start()
 
