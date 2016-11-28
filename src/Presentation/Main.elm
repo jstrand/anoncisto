@@ -1,45 +1,13 @@
 module Presentation.Main exposing (initialModel)
 
-import Http
-import Task
-
 import Presentation.Types exposing (Model, Mode(..), Msg(..))
 import Steps.Main as Steps
 
-titleSlide : String
-titleSlide = """
+initialModel : List String -> String -> (Model, Cmd Msg)
+initialModel slides flipUrl =
+  let firstSlide = Maybe.withDefault "Empty presentation" <| List.head slides
+      rest = Maybe.withDefault [] <| List.tail slides
+  in
+    (Model (Steps.new firstSlide rest) Presenting flipUrl
+    , Cmd.none)
 
-# Lunch-dragning om Elm
-
-Johan Strand
-
-2016-11-15
-
-"""
-
-introElm : String
-introElm = """
-
-# Elm
-* Bla
-* Bla
-
-"""
-
-typesInElm : String
-typesInElm = """
-
-# Types in Elm
-* Bla bla
-* asdf
-
-"""
-
-initialModel : (Model, Cmd Msg)
-initialModel =
-  (defaultModel
-  , Cmd.none)
-
-defaultModel : Model
-defaultModel =
-  Model (Steps.new titleSlide [introElm, typesInElm]) Presenting ""

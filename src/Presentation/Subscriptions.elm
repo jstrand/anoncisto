@@ -12,13 +12,10 @@ keyToMsg code =
     37 -> Previous
     _  -> Noop
 
-broadCastEndpoint : String
-broadCastEndpoint = "ws://localhost:9000"
-
 presentationSubscriptions : Model -> Sub Msg
 presentationSubscriptions model =
   case model.mode of
     Presenting -> Sub.batch
       [ Keyboard.downs keyToMsg
-      , WebSocket.listen broadCastEndpoint NewMessage
+      , WebSocket.listen model.flipUrl NewMessage
       ]
