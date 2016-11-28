@@ -19,6 +19,6 @@ presentationSubscriptions : Model -> Sub Msg
 presentationSubscriptions model =
   case model.mode of
     Presenting -> Sub.batch
-      [ Keyboard.presses keyToMsg
+      [ Keyboard.downs keyToMsg
       , WebSocket.listen broadCastEndpoint NewMessage
       ]
